@@ -5,7 +5,9 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -47,7 +49,7 @@ public class AdminController {
 			return new ResponseEntity<List<Routes>>(routeService.getAllRoutes(), HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Routes cannot get", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Routes cannot get", HttpStatus.OK);
 		}
 	}
 	
@@ -58,7 +60,7 @@ public class AdminController {
 			return new ResponseEntity<Routes>(routeService.getRouteById(id), HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Routes cannot get", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Routes cannot get", HttpStatus.OK);
 		}
 	}
 	
@@ -69,7 +71,7 @@ public class AdminController {
 			return new ResponseEntity<String>(routeService.addRoutes(r), HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Routes cannot be added successfully", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Routes cannot be added successfully", HttpStatus.OK);
 		}
 	}
 	
@@ -77,10 +79,12 @@ public class AdminController {
 	public ResponseEntity<?> updateRoutes(@RequestBody Routes r) {
 		System.out.println("updateRoutes");
 		try {
-			return new ResponseEntity<String>(routeService.updateRoutes(r), HttpStatus.OK);
+			HttpHeaders hd = new HttpHeaders();
+			hd.setContentType(MediaType.TEXT_PLAIN);
+			return new ResponseEntity<String>(routeService.updateRoutes(r), hd, HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Routes cannot be added successfully", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Routes cannot be added successfully", HttpStatus.OK);
 		}
 	}
 	
@@ -91,7 +95,7 @@ public class AdminController {
 			return new ResponseEntity<String>(routeService.removeRoutes(id), HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Routes cannot be removed", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Routes cannot be removed", HttpStatus.OK);
 		}
 	}
 	
@@ -104,7 +108,7 @@ public class AdminController {
 			return new ResponseEntity<List<Bus>>(busService.getAllBus(), HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Bus cannot get", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Bus cannot get", HttpStatus.OK);
 		}
 	}
 	
@@ -115,7 +119,7 @@ public class AdminController {
 			return new ResponseEntity<Bus>(busService.getBusById(id), HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Bus cannot get", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Bus cannot get", HttpStatus.OK);
 		}
 	}
 	
@@ -126,7 +130,7 @@ public class AdminController {
 			return new ResponseEntity<String>(busService.addBus(b, routeId), HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Bus cannot be added successfully", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Bus cannot be added successfully", HttpStatus.OK);
 		}
 	}
 	
@@ -134,10 +138,11 @@ public class AdminController {
 	public ResponseEntity<?> updateBus(@RequestBody Bus b) {
 		System.out.println("updateBus");
 		try {
-			return new ResponseEntity<String>(busService.updateBus(b), HttpStatus.OK);
+			busService.updateBus(b);
+			return new ResponseEntity<Void>(HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Bus cannot be added successfully", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Bus cannot be added successfully" ,HttpStatus.OK);
 		}
 	}
 	
@@ -148,7 +153,7 @@ public class AdminController {
 			return new ResponseEntity<String>(busService.removeBus(id), HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Bus cannot be removed", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Bus cannot be removed", HttpStatus.OK);
 		}
 	}
 	

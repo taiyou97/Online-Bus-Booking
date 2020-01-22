@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class User {
 	private Integer id;
@@ -158,6 +160,7 @@ public class User {
 		this.role = role;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<Tickets> getTickets() {
 		return tickets;
@@ -177,6 +180,7 @@ public class User {
 		tickets.setUserId(null);
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<Feedback> getFeedbacks() {
 		return feedbacks;

@@ -42,8 +42,8 @@ public class UserController {
 				hs.setAttribute("userDetails", u);
 			return new ResponseEntity<User>(u, HttpStatus.OK);
 		}catch (RuntimeException e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>("User Invalid", HttpStatus.INTERNAL_SERVER_ERROR);
+			//e.printStackTrace();
+			return new ResponseEntity<String>("User Invalid", HttpStatus.OK);
 		}
 	}
 	
@@ -55,7 +55,7 @@ public class UserController {
 			return new ResponseEntity<String>("Successfully Registered", HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Not Registered", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Not Registered", HttpStatus.OK);
 		}
 	}
 	
@@ -72,7 +72,7 @@ public class UserController {
 			return new ResponseEntity<String>("Password changed successfully, loginAgain", hd, HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Change Password", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Change Password", HttpStatus.OK);
 		}
 	}
 	
@@ -84,7 +84,7 @@ public class UserController {
 			return new ResponseEntity<String>("Phone Number changed Successfully", HttpStatus.OK);
 		}catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("Phone cannot be changed", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("Phone cannot be changed", HttpStatus.OK);
 		}
 	}
 	
@@ -96,7 +96,7 @@ public class UserController {
 			return new ResponseEntity<String>("User updated Successfully", HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("User cannot be updated", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<String>("User cannot be updated", HttpStatus.OK);
 		}
 	}
 	
@@ -107,6 +107,6 @@ public class UserController {
 		HttpHeaders hd = new HttpHeaders();
 		//Add Login/Home URL
 		hd.add("refresh", "5;url=https://www.baeldung.com/spring-response-entity");
-		return new ResponseEntity<String>("You are successfully LogOut", hd, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<String>("You are successfully LogOut", hd, HttpStatus.OK);
 	}
 }
