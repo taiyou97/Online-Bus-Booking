@@ -53,13 +53,16 @@ public class BusDaoImpl implements IBusDao{
 	@Override
 	public String updateBus(Bus b) {
 		Bus oldBus = sf.getCurrentSession().get(Bus.class, b.getId());
+		System.out.println(b);
+		System.out.println(b.getFrequency());
 		oldBus.setCapacity(b.getCapacity());
 		oldBus.setType(b.getType());
 		oldBus.setArrival(b.getArrival());
 		oldBus.setDestination(b.getDestination());
 		oldBus.setPrice(b.getPrice());
-		oldBus.setFrequency(b.getFrequency());
-		sf.getCurrentSession().update(oldBus);
+		oldBus.removeFrequency(b.getFrequency());
+		oldBus.addFrequency(b.getFrequency());
+		sf.getCurrentSession().merge(oldBus);
 		return "Bus updated Successfully";
 	}
 

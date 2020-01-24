@@ -49,4 +49,11 @@ public class UserDaoImpl implements IUserDao {
 		sf.getCurrentSession().update(oldUser);
 	}
 
+	@Override
+	public User getUser(String email) {
+		System.out.println("getUser()");
+		String jpql = "select u from User u where u.email = :email";
+		return sf.getCurrentSession().createQuery(jpql, User.class).setParameter("email", email).getSingleResult();
+	}
+
 }

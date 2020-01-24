@@ -47,6 +47,18 @@ public class UserController {
 		}
 	}
 	
+	@PostMapping("/getUser")
+	public ResponseEntity<?> getUser(@RequestBody String email) {
+		System.out.println("getUser" + email );
+		try {
+			User u = service.getUser(email);
+			return new ResponseEntity<User>(u, HttpStatus.OK);
+		}catch (RuntimeException e) {
+			//e.printStackTrace();
+			return new ResponseEntity<String>("User Invalid", HttpStatus.OK);
+		}
+	}
+	
 	@PostMapping("/register")
 	public ResponseEntity<?> registerUser(@RequestBody User u) {
 		System.out.println("registerUser()");
@@ -60,16 +72,18 @@ public class UserController {
 	}
 	
 	@PutMapping("/changePassword")
-	public ResponseEntity<?> changePassword(@RequestBody User u, HttpSession hs) {
+	public ResponseEntity<?> changePassword(@RequestBody User u) {
 		System.out.println("changePassword()");
 		try {
 			service.updatePassword(u.getEmail(), u.getPassword());
+			/*
 			if( hs!=null )
 				hs.invalidate();
 			HttpHeaders hd = new HttpHeaders();
 			//Add Login/Home URL
 			hd.add("refresh", "5;url=https://www.baeldung.com/spring-response-entity");
-			return new ResponseEntity<String>("Password changed successfully, loginAgain", hd, HttpStatus.OK);
+			*/
+			return new ResponseEntity<String>("Password changed successfully, loginAgain", HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("Change Password", HttpStatus.OK);

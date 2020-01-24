@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.pojos.Bus;
@@ -107,7 +106,7 @@ public class AdminController {
 		try {
 			return new ResponseEntity<List<Bus>>(busService.getAllBus(), HttpStatus.OK);
 		} catch (RuntimeException e) {
-			e.printStackTrace();
+			e.printStackTrace();	
 			return new ResponseEntity<String>("Bus cannot get", HttpStatus.OK);
 		}
 	}
@@ -127,6 +126,7 @@ public class AdminController {
 	public ResponseEntity<?> addBus(@RequestBody Bus b, @PathVariable int routeId) {
 		System.out.println("addBus");
 		try {
+			System.out.println(b);
 			return new ResponseEntity<String>(busService.addBus(b, routeId), HttpStatus.OK);
 		} catch (RuntimeException e) {
 			e.printStackTrace();

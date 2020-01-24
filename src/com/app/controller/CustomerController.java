@@ -9,14 +9,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.pojos.Bus;
 import com.app.pojos.Seats;
+import com.app.pojos.Tickets;
 import com.app.service.IBusService;
 import com.app.service.ISeatsService;
+import com.app.service.ITicketsService;
+import com.app.utility.TicketUtils;
 
 @RestController
 @CrossOrigin
@@ -28,6 +35,9 @@ public class CustomerController {
 	
 	@Autowired
 	ISeatsService seatsService;
+	
+	@Autowired
+	ITicketsService ticketsService;
 	
 	@PostConstruct
 	public void init() {
@@ -96,5 +106,53 @@ public class CustomerController {
 	
 	
 	//Tickets Service
-	//@GetMapping("/bookTicket")
+	@PostMapping("/bookTicket")
+	public ResponseEntity<?> bookTicket(@RequestBody Tickets t, @RequestParam int userId, @RequestParam int busId)
+	{
+		System.out.println("bookTicket");
+		try {
+			return new ResponseEntity<Tickets>(ticketsService.bookTickets(t, busId, userId), HttpStatus.OK);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Seats for selected bus cannot be booked", HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/cancelTicket/{ticketId}")
+	public ResponseEntity<?> cancelTicket(@PathVariable int ticketId)
+	{
+		System.out.println("cancelTicket");
+		try {
+			return new ResponseEntity<Tickets>(ticketsService.cancelTickets(ticketId), HttpStatus.OK);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Tickets cannot be cancelled", HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/getUserTickets/{userId}")
+	public ResponseEntity<?> getTicketsofUser(@PathVariable int userId)
+	{
+		System.out.println("getTicketsofUser");
+		try {
+			return new ResponseEntity<List<Tickets>>(ticketsService.getTicketsofUser(userId), HttpStatus.OK);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Tickets cannot be fetched for user", HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/getBusTickets/")
+	public ResponseEntity<?> getTicketsofBus(@RequestParam int busId, @RequestParam String date)
+	{
+		System.out.println("getTicketsofBus");
+		try {
+			return new ResponseEntity<List<Tickets>>(ticketsService.getTicketsofBus(busId, date), HttpStatus.OK);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return new ResponseEntity<String>("Tickets cannot be fetched for Bus", HttpStatus.OK);
+		}
+	}
+	
+	
 }

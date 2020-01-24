@@ -98,7 +98,7 @@ public class Bus {
 	}
 
 	@Temporal(TemporalType.TIME)
-	@JsonFormat(pattern = "HH:mm:ss", timezone = "Asia/Kolkata")
+	@JsonFormat(pattern = "HH:mm", timezone = "Asia/Kolkata")
 	@Column(nullable = false)
 	public Date getArrival() {
 		return arrival;
@@ -109,7 +109,7 @@ public class Bus {
 	}
 
 	@Temporal(TemporalType.TIME)
-	@JsonFormat(pattern = "HH:mm:ss", timezone = "Asia/Kolkata")
+	@JsonFormat(pattern = "HH:mm", timezone = "Asia/Kolkata")
 	@Column(nullable = false)
 	public Date getDestination() {
 		return destination;

@@ -124,6 +124,7 @@ public class Frequency {
 	}
 	
 	public boolean isRuns(int day) {
+		System.out.println("day = " + day);
 		if( day==0 )
 			return this.sun;
 		if(day==1)

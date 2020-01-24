@@ -1,7 +1,7 @@
 package com.app.pojos;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,13 +15,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Tickets {
 	private Integer id;
-	private LocalDate bookedDate;
+	private Date bookedDate;
 	private String ownerName;
 	private Long ownerPhone;
 	private double fare;
@@ -30,12 +33,17 @@ public class Tickets {
 	private Bus busId;
 	private User userId;
 	private List<Passenger> passengers = new ArrayList<Passenger>();
+	
+	/*
+	INSERT INTO Tickets (bookedDate, ownerName, ownerPhone, fare, noOfSeats, paymentMode, busId, userId) VALUES 
+	("2020-01-26", "AMAN", 7587042615, 400, 1, "CASH", 2, 2);
+	 */
 
 	Tickets() {
 		System.out.println("Tickets()");
 	}
 
-	public Tickets(LocalDate bookedDate, String ownerName, Long ownerPhone, double fare, byte noOfSeats,
+	public Tickets(Date bookedDate, String ownerName, Long ownerPhone, double fare, byte noOfSeats,
 			PaymentType paymentMode) {
 		super();
 		this.bookedDate = bookedDate;
@@ -56,12 +64,14 @@ public class Tickets {
 		this.id = id;
 	}
 
+	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Column(nullable = false)
-	public LocalDate getBookedDate() {
+	public Date getBookedDate() {
 		return bookedDate;
 	}
 
-	public void setBookedDate(LocalDate bookedDate) {
+	public void setBookedDate(Date bookedDate) {
 		this.bookedDate = bookedDate;
 	}
 

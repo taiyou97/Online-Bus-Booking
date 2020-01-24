@@ -39,4 +39,9 @@ public class UserServiceImpl implements IUserService {
 		dao.updatePhone(email, newPhone);
 	}
 
+	@Override
+	public User getUser(String email) {
+		return dao.getUser(email);
+	}
+
 }
