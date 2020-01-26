@@ -65,7 +65,7 @@ public class Tickets {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Kolkata")
 	@Column(nullable = false)
 	public Date getBookedDate() {
 		return bookedDate;
@@ -121,7 +121,6 @@ public class Tickets {
 		this.paymentMode = paymentMode;
 	}
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "busId")
 	public Bus getBusId() {
